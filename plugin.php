@@ -3,10 +3,11 @@
   /**
     This is the ContentWidget plugin.
 
-    This file contains the ContentWidget plugin. It takes a configured content and provides it during an ON_WIDGETS call.
+    This file contains the ContentWidget plugin. It takes a configured content
+    and provides it during an ON_WIDGETS call.
 
     @package urlaube\contentwidget
-    @version 0.1a0
+    @version 0.1a1
     @author  Yahe <hello@yahe.sh>
     @since   0.1a0
   */
@@ -16,24 +17,21 @@
   // prevent script from getting called directly
   if (!defined("URLAUBE")) { die(""); }
 
-  if (!class_exists("ContentWidget")) {
-    class ContentWidget extends Base implements Plugin {
+  class ContentWidget extends BaseSingleton implements Plugin {
 
-      // HELPER FUNCTIONS
+    // HELPER FUNCTIONS
 
-      protected static function configure() {
-        Plugins::preset("contentwidget", null);
-      }
-
-      // RUNTIME FUNCTIONS
-
-      public static function plugin() {
-        return Plugins::get("contentwidget");
-      }
-
+    protected static function configure() {
+      Plugins::preset(ContentWidget::class, null);
     }
 
-    // register plugin
-    Plugins::register("ContentWidget", "plugin", ON_WIDGETS);
+    // RUNTIME FUNCTIONS
+
+    public static function plugin() {
+      return preparecontent(value(Plugins::class, ContentWidget::class), null, [CONTENT, TITLE]);
+    }
+
   }
 
+  // register plugin
+  Plugins::register(ContentWidget::class, "plugin", ON_WIDGETS);
