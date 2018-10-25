@@ -22,13 +22,13 @@
     // HELPER FUNCTIONS
 
     protected static function configure() {
-      Plugins::preset(ContentWidget::class, null);
+      Plugins::preset(static::class, null);
     }
 
     // RUNTIME FUNCTIONS
 
     public static function plugin() {
-      return preparecontent(value(Plugins::class, ContentWidget::class), null, [CONTENT, TITLE]);
+      return preparecontent(value(Plugins::class, static::class), null, [CONTENT, TITLE]);
     }
 
   }
